@@ -5,7 +5,7 @@ import * as Joi from "joi";
     // 구성모듈을 추상화하고 nest모듈에 래핑하는 이유: 확장성, 여러 환경에대한 구성 관리 쉬움. 주입,접근 용이
     imports:[NestConfigModule.forRoot({
         validationSchema:Joi.object({
-            MONGODB_URI : Joi.string(),
+            MONGODB_URI : Joi.string().required(),
         }),
         envFilePath:'.env',
         isGlobal:true,
