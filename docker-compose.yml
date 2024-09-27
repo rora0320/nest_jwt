@@ -1,0 +1,22 @@
+services:
+  reservations:
+    build:
+      context: .
+      dockerfile: ./apps/reservations/Dockerfile
+      target: develop_kyeong
+    command: yarn run start:dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - /home/ubun2/mongodb/data:/data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
