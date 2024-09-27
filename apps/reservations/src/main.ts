@@ -3,7 +3,6 @@ import { ReservationsModule } from './reservations.module';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
-import { config } from 'rxjs';
 
 async function bootstrap() {
   const app = await NestFactory.create(ReservationsModule);
@@ -12,6 +11,6 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.get<string>('PORT'));
 }
 bootstrap();

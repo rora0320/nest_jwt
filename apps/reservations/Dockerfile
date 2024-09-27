@@ -22,7 +22,7 @@ COPY package.json ./
 COPY yarn.lock ./
 
 RUN npm install -g yarn
-RUN yarn add --prod
+RUN yarn add --prodyarn
 
 COPY --from=develop_kyeong /usr/src/app/dist ./dist
 
