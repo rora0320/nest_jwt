@@ -7,7 +7,7 @@ import {
   ReservationSchema,
 } from './models/reservation.schema';
 import { ReservationsRepository } from './reservations.repository';
-import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule } from '@app/common/logger/logger.module';
 
 @Module({
   imports: [
@@ -15,16 +15,7 @@ import { LoggerModule } from 'nestjs-pino';
     DatabaseModule.forFeature([
       { name: ReservationDocument.name, schema: ReservationSchema },
     ]),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            singleLine: true,
-          },
-        },
-      },
-    }),
+    LoggerModule,
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService, ReservationsRepository],
