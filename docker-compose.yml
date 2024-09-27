@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./apps/reservations/Dockerfile
       target: develop_kyeong
-    command: yarn run start:dev
+    command: yarn run start:dev reservations
     ports:
       - '3000:3000'
     volumes:
@@ -20,3 +20,14 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
+
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: develop_kyeong
+    command: yarn run start:dev auth
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app
