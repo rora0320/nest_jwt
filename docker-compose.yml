@@ -17,9 +17,6 @@ services:
       - 27017:27017
     volumes:
       - /home/ubun2/mongodb/data:/data
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
 
   auth:
     build:
