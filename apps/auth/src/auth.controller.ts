@@ -13,9 +13,11 @@ export class AuthController {
   @Post('login')
   async login(
     @CurrentUser() user: UserDocument,
+    //passthrough 쿠키에 token 전달
     @Res({ passthrough: true }) response: Response,
   ) {
     await this.authService.login(user, response);
+
     response.send(user);
   }
 
