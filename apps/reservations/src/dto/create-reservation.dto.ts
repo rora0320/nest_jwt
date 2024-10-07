@@ -1,6 +1,14 @@
 import { Date } from 'mongoose';
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsDefined,
+  IsNotEmpty,
+  IsNotEmptyObject,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
+import { CreateChargeDto } from '../../../payments/src/dto/create-charge.dto';
 
 export class CreateReservationDto {
   /**
@@ -30,4 +38,14 @@ export class CreateReservationDto {
   @IsString()
   @IsNotEmpty()
   invoiceId: string;
+
+  //여기서 정의할거야
+  @IsDefined()
+  //비어있지않은 객체이고
+  @IsNotEmptyObject()
+  //중첩 검증할거고
+  @ValidateNested()
+  // 타입을 반환하면 오류가 발생했을때 뭐가 부족한지 알기 쉬움
+  @Type(() => CreateChargeDto)
+  charge: CreateChargeDto;
 }

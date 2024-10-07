@@ -11,7 +11,7 @@ import { LoggerModule } from '@app/common/logger/logger.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_SERVICE } from '@app/common/constants/service';
+import { AUTH_SERVICE, PAYMENT_SERVICE } from '@app/common/constants/service';
 
 @Module({
   imports: [
@@ -26,8 +26,13 @@ import { AUTH_SERVICE } from '@app/common/constants/service';
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
         PORT: Joi.number().required(),
+        AUTH_HOST: Joi.string().required(),
+        AUTH_PORT: Joi.number().required(),
+        PAYMENT_HOST: Joi.string().required(),
+        PAYMENT_PORT: Joi.number().required(),
       }),
     }),
+    //노출된 정적 메서드 가져오는 기술
     ClientsModule.registerAsync([
       {
         name: AUTH_SERVICE,
@@ -36,6 +41,17 @@ import { AUTH_SERVICE } from '@app/common/constants/service';
           options: {
             host: configService.get('AUTH_HOST'),
             port: configService.get('AUTH_PORT'),
+          },
+        }),
+        inject: [ConfigService],
+      },
+      {
+        name: PAYMENT_SERVICE,
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get('PAYMENT_HOST'),
+            port: configService.get('PAYMENT_PORT'),
           },
         }),
         inject: [ConfigService],
